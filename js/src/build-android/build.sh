@@ -1,10 +1,14 @@
 #!/bin/sh
 
+ANDROID_NDK=/data2/android-ndk
+ANDROID_SDK=/data2/android-sdk-linux_x86
+PLATFORM=linux-x86
+
 # configure
-../configure --with-android-ndk=/opt/android/android-ndk \
-             --with-android-sdk=/opt/android/android-sdk \
+../configure --with-android-ndk=$ANDROID_NDK \
+             --with-android-sdk=$ANDROID_SDK \
              --with-android-version=5 \
-             --with-android-toolchain=/opt/android/android-ndk/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86 \
+             --with-android-toolchain=$ANDROID_NDK/toolchains/arm-linux-androideabi-4.4.3/prebuilt/$PLATFORM \
              --enable-application=mobile/android \
              --target=arm-linux-androideabi \
              --disable-shared-js \
@@ -27,4 +31,4 @@ mkdir -p ../../../dist/lib
 cp -RL dist/lib/libjs_static.a ../../../dist/lib/libjs_static.a
 
 # strip unneeded symbols
-/opt/android/android-ndk/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/bin/arm-linux-androideabi-strip --strip-unneeded ../../../dist/lib/libjs_static.a
+$ANDROID_NDK/toolchains/arm-linux-androideabi-4.4.3/prebuilt/$PLATFORM/bin/arm-linux-androideabi-strip --strip-unneeded ../../../dist/lib/libjs_static.a
